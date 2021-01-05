@@ -1,0 +1,29 @@
+.site-layout-content {
+    max-width: 100%;
+    min-height: 280px;
+    max-height: 100%;
+    padding: 24px;
+    background: #fff;
+}
+
+.ant-row-rtl .logo {
+    float: right;
+    margin: 16px 0 16px 24px;
+}
+
+[data-theme="dark"] .site-layout-content {
+    background: #141414;
+}
+
+.header-logo {
+    float: left;
+    width: 31px;
+    height: 31px;
+    margin: 16px 24px 16px 0;
+}
+
+.connexion-box {
+    float: right;
+    height: 64px;
+    margin: 0 24px 0 0;
+}
