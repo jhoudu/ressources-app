@@ -11,7 +11,7 @@ const Home = () => {
     return (
       <>
         <h1>Accueil</h1>
-        Application prototype de Back-Office<br /><br/>
+        Ceci est un prototype de Back-Office de gestion de ressources<br /><br/>
         Jeton Keycloak :
         {initialized ?
           <pre >{JSON.stringify(keycloak, undefined, 2)}</pre>
