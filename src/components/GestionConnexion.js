@@ -7,10 +7,10 @@ import { useKeycloak } from '@react-keycloak/ssr'
 const GererConnexion = () => {
 
     const { keycloak, initialized } = useKeycloak()
-    //console.log(`initialisée : ${initialized}`)
-    //console.log(`objet keycloak : ${keycloak}`)
-    //console.log(`objet token : ${keycloak.tokenParsed}`)
-    //console.log(`authentifié : ${keycloak.authenticated}`)
+    console.log(`initialisée : ${initialized}`)
+    console.log(`objet keycloak : ${keycloak}`)
+    console.log(`objet token : ${keycloak.tokenParsed}`)
+    console.log(`authentifié : ${keycloak.authenticated}`)
     
     return (
         <Space>

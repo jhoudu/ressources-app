@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 import logo from '../react.svg';
-import GererConnexion from './GererConnexion'
+import GestionConnexion from './GestionConnexion'
 
 const { Header } = Layout;
 
@@ -26,7 +26,7 @@ class HeaderApp extends Component {
             <Header style={{ color: '#fff' }}>
                 <img className='header-logo' src={logo} />
                 <div className='connexion-box'>
-                    <GererConnexion />
+                    <GestionConnexion />
                     </div>
 
                 <Menu theme="dark" mode="horizontal">
