@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Space } from 'antd';
 
 const { Item } = Form;
 const { TextArea } = Input;
@@ -55,6 +55,10 @@ class FormulaireRessource extends Component {
             console.log('Success:', values);
         }
 
+        const handleClick = (event) => {
+            this.props.selectionnerRessource('')
+        }
+
         return (
             <>
                         <h1>Modifier une ressource</h1>
@@ -99,9 +103,14 @@ class FormulaireRessource extends Component {
                             </Item>
                             
                             <Item {...tailLayout}>
-                                <Button type="primary" htmlType="submit">
-                                    Submit
+                                <Space>
+                                <Button onClick={e => handleClick(e)}>
+                                    Annuler
                                 </Button>
+                                <Button type="primary" htmlType="submit">
+                                    Valider
+                                </Button>
+                                </Space>
                             </Item>
                         </Form>
                     </>

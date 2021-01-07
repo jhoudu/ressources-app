@@ -42,6 +42,7 @@ class GestionRessources extends Component {
             <FormulaireRessource
                 ressource={this.state.ressources.get(this.state.id)}
                 modifierRessource={modifierRessource}
+                selectionnerRessource={selectionnerRessource}
             />
         )
 

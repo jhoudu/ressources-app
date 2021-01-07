@@ -47,14 +47,8 @@ const TableRessources = (props) => {
                 title: 'Titre',
                 dataIndex: 'titre',
                 key: 'titre',
+                render: (text, record) => <a href={record.lien}>{text}</a>,
                 width: 350
-            },
-            {
-                title: 'Lien',
-                dataIndex: 'lien',
-                key: 'lien',
-                render: text => <a href={text}>Accèder à la ressource</a>,
-                width: 200
             },
             {
                 title: 'Description',
