@@ -4,7 +4,7 @@ import { Space, Button } from 'antd';
 // keycloack
 import { useKeycloak } from '@react-keycloak/ssr'
 
-const GererConnexion = () => {
+const GestionConnexion = () => {
 
     const { keycloak, initialized } = useKeycloak()
     console.log(`initialisée : ${initialized}`)
@@ -24,4 +24,4 @@ const GererConnexion = () => {
     )
 }
 
-export default GererConnexion
+export default GestionConnexion
