@@ -68,9 +68,12 @@ class APITest extends Component {
         return (
             <>
                 <h1>Test d'appels de l'API PostgREST.</h1>
-                Lecture (GET)
+                <h2>Lecture (GET)</h2>
+                <div style={{overflowY: 'scroll', height:'calc(100vh - 330px)'}}>
                 <pre >{JSON.stringify(this.state.response, undefined, 2)}</pre>
-                Ecriture (POST)
+                </div>
+                <br/>
+                <h2>Ecriture (POST)</h2>
                 <pre>Status : {this.state.responsePOST["status"]}</pre>
             </>
         )
