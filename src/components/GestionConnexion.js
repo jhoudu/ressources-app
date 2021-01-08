@@ -7,12 +7,23 @@ import { useKeycloak } from '@react-keycloak/ssr'
 const GestionConnexion = () => {
 
     const { keycloak, initialized } = useKeycloak()
-    console.log(`initialisée : ${initialized}`)
-    console.log(`objet keycloak : ${keycloak}`)
-    console.log(`objet token : ${keycloak.tokenParsed}`)
+    typeof window !== 'undefined' && window.env !== 'undefined'? 
+        // client
+        console.log('Gestion connexion client') 
+        // server
+        :console.log('Gestion connexion serveur')
+      
+    console.log(`initialisé : ${initialized}`)
     console.log(`authentifié : ${keycloak.authenticated}`)
+    console.log('keycloak : ')
+    console.log(keycloak)
+    // Non définit sur le server
+    console.log('token parsed : ')
+    console.log(keycloak.tokenParsed)
+    
     
     return (
+
         <Space>
             {keycloak.authenticated && keycloak.tokenParsed && keycloak.tokenParsed.preferred_username}
             {!!keycloak.authenticated ?
