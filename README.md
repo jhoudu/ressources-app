@@ -1,22 +1,24 @@
 # Prototype of frontend for Back-Office
 
-## Client
+## Javascript libraries
 Name         | Description
 ------------ | -------------
-ReactJS | 
+ReactJS | For building user interfaces
 Razzle | For Server Side Redering
 antd | For design
 
 ## Servers
 
-Name         | Description
------------- | -------------
-Keycloack | Authentication & Authorization
-PostgREST | RESTFull API for PostgreSQL
-PostgreSQL | SGBD
+Name         | Description   | Located at
+------------ | ------------- | -------------
+Node.js | Javascript runtime | http://localhost:3000/
+Keycloack | Authentication & Authorization | http://localhost:8080/
+PostgREST | RESTFull API for PostgreSQL | http://localhost:3003/
+PostgreSQL | SGBD | 
+Swagger | Visual overview of the API | http://localhost:8088/
 
 ## TODOs
-Issue : keycloak not initialized on refresh
+Issue : keycloak variable not initialized on refresh
 
 Manage keycloak with redux  
 import * as AuthorizationActions from './framework/redux/modules/Authorization';  
