@@ -7,12 +7,12 @@ function getKeycloakConfig() {
         // client
         url: 'http://localhost:8080/auth', 
         realm: 'proto', 
-        clientId: 'frontend-ressources'
+        clientId: 'frontend_ressources'
       }
     : {
         // server
         url: serverEnv('KEYCLOAK_URL', 'http://localhost:8080/auth'),
-        clientId: serverEnv('KEYCLOAK_CLIENT_ID', 'frontend-ressources'),
+        clientId: serverEnv('KEYCLOAK_CLIENT_ID', 'frontend_ressources'),
         realm: serverEnv('KEYCLOAK_REALM', 'proto'),
       }
 }

@@ -1,14 +1,19 @@
 # Prototype of frontend for Back-Office
 
-## Usage
-docker-compose --env-file ./.env up
+Frontend with following functions :  
 
-## Javascript libraries
-Name         | Description
------------- | -------------
-ReactJS | For building user interfaces
-Razzle | For Server Side Redering
-antd | For design
+* Authentication and authorization
+* Wen resources list (title, description, link)
+* Test API :
+  * SELECT
+  * POST authorized only if connected and have the role for
+
+## Usage
+docker-compose --env-file ./.env up  
+
+## Frontend
+http://localhost:3000/  
+Login : jehoudu / kepass  
 
 ## Servers
 
@@ -20,11 +25,18 @@ PostgREST | RESTFull API for PostgreSQL | http://localhost:3003/
 PostgreSQL | SGBD | 
 Swagger | Visual overview of the API | http://localhost:8088/
 
-## TODOs
-Issue : keycloak variable not initialized on refresh
+## Docker
+docker-compose except for node server.  
+Initialization of Postgres and Keycloak  
 
-Manage keycloak with redux  
-import * as AuthorizationActions from './framework/redux/modules/Authorization';  
-https://github.com/czetsuya/keycloak-react/blob/master/src/AppInlineProfile.js
+## Javascript libraries
+
+Name         | Description
+------------ | -------------
+ReactJS | For building user interfaces
+Razzle | For Server Side Redering
+antd | For design
+
+
 
 
