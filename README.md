@@ -1,5 +1,8 @@
 # Prototype of frontend for Back-Office
 
+## Usage
+docker-compose --env-file ./.env up
+
 ## Javascript libraries
 Name         | Description
 ------------ | -------------

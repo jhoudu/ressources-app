@@ -27,7 +27,7 @@ class APITest extends Component {
         console.log('Lecture'); 
         
         try {
-            const response = await fetch("http://localhost:3003/todos", {
+            const response = await fetch("http://localhost:3003/ressources", {
                 "method": "GET"
             })
             const json = await response.json()
@@ -51,10 +51,10 @@ class APITest extends Component {
         }
 
         try {
-            const response = await fetch("http://localhost:3003/todos", {
+            const response = await fetch("http://localhost:3003/ressources", {
                 "method": "POST",
                 "headers": requestheaders,
-                "body": "{\"task\": \"do bad thing\"}"
+                "body": "{\"titre\": \"github frontend ressources\", \"lien\": \"https://github.com/jhoudu/frontend-ressources-app\"}"
             })
             console.log(response)
             this.setState({responsePOST: response})
