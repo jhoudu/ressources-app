@@ -3,7 +3,7 @@
 Frontend with following functions :  
 
 * Authentication and authorization
-* Wen resources list (title, description, link)
+* Web resources list (title, description, link)
 * Test API :
   * SELECT
   * POST authorized only if connected and have the role for
