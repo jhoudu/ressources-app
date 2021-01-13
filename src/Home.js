@@ -13,10 +13,12 @@ const Home = () => {
         <h1>Accueil</h1>
         Ceci est un prototype de Back-Office de gestion de ressources<br /><br/>
         Jeton Keycloak :
-        {initialized ?
-          <pre >{JSON.stringify(keycloak, undefined, 2)}</pre>
-          : <h2>keycloak initializing.</h2>
-        }
+        <div style={{overflowY: 'scroll', height:'calc(100vh - 250px)'}}>
+          {initialized ?
+              <pre >{JSON.stringify(keycloak, undefined, 2)}</pre>
+                : <h2>keycloak initializing.</h2>
+          }
+        </div>
 
       </>
     );
