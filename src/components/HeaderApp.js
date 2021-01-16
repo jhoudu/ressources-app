@@ -20,14 +20,13 @@ class HeaderApp extends Component {
         }
     }
 
-
     render() {
         return (
             <Header style={{ color: '#fff' }}>
                 <img className='header-logo' src={logo} />
                 <div className='connexion-box'>
                     <GestionConnexion />
-                    </div>
+                </div>
 
                 <Menu theme="dark" mode="horizontal">
                     <Menu.Item key="1" onClick={this.handleClick}>Accueil</Menu.Item>

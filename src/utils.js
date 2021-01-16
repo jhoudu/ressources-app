@@ -17,4 +17,8 @@ function getKeycloakConfig() {
       }
 }
 
-export { getKeycloakConfig }
+function getPostgRestConfig() {
+  return 'http://localhost:3003/'
+}
+
+export { getKeycloakConfig, getPostgRestConfig }

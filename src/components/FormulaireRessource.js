@@ -12,7 +12,7 @@ class FormulaireRessource extends Component {
 
     formRef = React.createRef();
 
-    componentDidMount () {
+    componentDidMount() {
         const { titre, lien, description } = this.props.ressource
         this.formRef.current.setFieldsValue(
             {
@@ -22,98 +22,90 @@ class FormulaireRessource extends Component {
             });
     }
 
-    render () {
+    render() {
 
-        
-
-        const layout = {
-            labelCol: {
-            span: 8,
-            },
-            wrapperCol: {
-            span: 16,
-            }
-        }
-    
         const tailLayout = {
             wrapperCol: {
                 offset: 8,
                 span: 16,
             }
         }
-    
+
+        // prend la ressource et la remonte
         const onFinish = (values) => {
-            const ressource = {...this.state.ressource}
-            const {titre, lien, description} = values
+            const ressource = { ...this.state.ressource }
+            const { titre, lien, description } = values
             ressource.titre = titre
             ressource.lien = lien
             ressource.description = description
-            this.props.modifierRessource(ressource)
-        }
-    
-        const onFinishFailed = (values) => {
-            console.log('Success:', values);
+            this.props.onDataUpdate(ressource)
         }
 
-        const handleClick = (event) => {
+        const onFinishFailed = (values) => {
+            console.log('KO:', values);
+        }
+
+        // bouton annuler
+        const handleClick = (e) => {
+            e.preventDefault
             this.props.selectionnerRessource('')
         }
 
         return (
             <>
-                        <h1>Modifier une ressource</h1>
-                        <Form
-                            ref={this.formRef}
-                            name='basic'
-                            onFinish={onFinish}
-                            onFinishFailed={onFinishFailed}
-                            initialValues={this.state.ressources}>
+                <h1>Modifier une ressource</h1>
+                <Form
+                    ref={this.formRef}
+                    name='basic'
+                    onFinish={onFinish}
+                    onFinishFailed={onFinishFailed}
+                    initialValues={this.state.ressources}>
 
-                            <Item
-                                label="Titre"
-                                name="titre"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Le titre de la ressource est obligatoire.',
-                                    },
-                                ]}
-                            >
-                                <Input />
-                            </Item>
+                    <Item
+                        label="Titre"
+                        name="titre"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Le titre de la ressource est obligatoire.',
+                            },
+                        ]}
+                    >
+                        <Input />
+                    </Item>
 
-                            <Item
-                                label="Lien"
-                                name="lien"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Le lien est obligatoire.',
-                                    },
-                                ]}
-                            >
-                                <Input />
-                            </Item>
+                    <Item
+                        label="Lien"
+                        name="lien"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Le lien est obligatoire.',
+                            },
+                        ]}
+                    >
+                        <Input />
+                    </Item>
 
-                            <Item
-                                label="Description"
-                                name="description"
-                            >
-                                <TextArea />
-                            </Item>
-                            
-                            <Item {...tailLayout}>
-                                <Space>
-                                <Button onClick={e => handleClick(e)}>
-                                    Annuler
+                    <Item
+                        label="Description"
+                        name="description"
+                    >
+                        <TextArea />
+                    </Item>
+
+                    <Item {...tailLayout}>
+                        <Space>
+                            <Button onClick={e => handleClick(e)}>
+                                Annuler
                                 </Button>
-                                <Button type="primary" htmlType="submit">
-                                    Valider
+                            <Button type="primary" htmlType="submit">
+                                Valider
                                 </Button>
-                                </Space>
-                            </Item>
-                        </Form>
-                    </>
+                        </Space>
+                    </Item>
+                </Form>
+            </>
         )
     }
 }

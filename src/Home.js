@@ -8,20 +8,16 @@ const Home = () => {
 
   const { keycloak, initialized } = useKeycloak()
 
-    return (
-      <>
-        <h1>Accueil</h1>
-        Ceci est un prototype de Back-Office de gestion de ressources<br /><br/>
+  return (
+    <>
+      <h1>Accueil</h1>
+        Ceci est un prototype de Back-Office de gestion de ressources<br /><br />
         Jeton Keycloak :
-        <div style={{overflowY: 'scroll', height:'calc(100vh - 250px)'}}>
-          {initialized ?
-              <pre >{JSON.stringify(keycloak, undefined, 2)}</pre>
-                : <h2>keycloak initializing.</h2>
-          }
-        </div>
-
-      </>
-    );
+      <div style={{ overflowY: 'scroll', height: 'calc(100vh - 250px)' }}>
+          <pre >{JSON.stringify(keycloak, undefined, 2)}</pre>
+       </div>
+    </>
+  );
 }
 
 export default Home;

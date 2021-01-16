@@ -11,29 +11,29 @@ class About extends Component {
   constructor(props) {
     super(props);
     const readmePath = require("../../README.md");
-    const fetch = require('node-fetch');  
+    const fetch = require('node-fetch');
 
     fetch(readmePath)
-    .then(response => {
-      return response.text()
-    })
-    .then(text => {
-      this.setState({
-        markdown: marked(text)
+      .then(response => {
+        return response.text()
       })
-    })
+      .then(text => {
+        this.setState({
+          markdown: marked(text)
+        })
+      })
   }
 
-    render () {
+  render() {
 
-  const { markdown } = this.state;
+    const { markdown } = this.state;
 
-        return (
-            <>
-              <div style={{overflowY: 'scroll', height:'calc(100vh - 250px)'}} dangerouslySetInnerHTML={{__html: markdown}}></div>
-            </>
-        )
-    }
+    return (
+      <>
+        <div style={{ overflowY: 'scroll', height: 'calc(100vh - 250px)' }} dangerouslySetInnerHTML={{ __html: markdown }}></div>
+      </>
+    )
+  }
 }
 
 export default About

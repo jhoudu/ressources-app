@@ -1,17 +1,25 @@
 import React, { Component } from 'react'
 import { Table, Tag } from 'antd';
+import { render } from 'react-dom';
+import { getKeycloakInstance } from '@react-keycloak/ssr';
 
-// keycloack
-import { useKeycloak } from '@react-keycloak/ssr'
+class TableRessources extends Component {
 
-const TableRessources = (props) => {
-        const { keycloak, initialized } = useKeycloak()
+    constructor(props) {
+        super(props);
+        console.log('construct')
+    }
+
+    render() {
+        console.log(`${this.constructor.name} : render time`)
+
+        const { selectionnerRessource, ressources } = this.props
 
         const onModifier = (key, e) => {
             e.preventDefault
-            props.selectionnerRessource(key)
+            selectionnerRessource(key)
         }
-        
+
         const sortDate = (a, b) => {
             //TODO: à améliorer et à refactorer !
             var parts = null
@@ -38,8 +46,8 @@ const TableRessources = (props) => {
                 db.setMonth(parts[1] - 1)
                 db.setDate(parts[0])
             }
-            
-            return (  da - db)
+
+            return (da - db)
         }
 
         const columns = [
@@ -57,23 +65,22 @@ const TableRessources = (props) => {
                 width: 400,
                 filters: [
                     {
-                      text: 'Vide',
-                      value: null,
+                        text: 'Vide',
+                        value: null,
                     },
                 ],
                 onFilter: (value, record) => {
-                    //console.log(value)
-                    return(!value && !record.description)
+                    return (!value && !record.description)
 
                 }
             },
             {
                 title: 'Date de publication',
-                dataIndex: 'datePub',
-                key: 'datePub',
+                dataIndex: 'datepub',
+                key: 'datepub',
                 width: 110,
                 defaultSortOrder: 'descend',
-                sorter: (a, b) => sortDate(a.datePub,b.datePub)
+                sorter: (a, b) => sortDate(a.datePub, b.datePub)
             },
             {
                 title: 'Source',
@@ -91,7 +98,7 @@ const TableRessources = (props) => {
                 title: 'Secteurs',
                 dataIndex: 'secteurs',
                 key: 'secteurs',
-                render: tags => (
+                /*render: tags => (
                     <span>
                       {tags.map(tag => {
                         const color = 'geekblue'
@@ -102,16 +109,16 @@ const TableRessources = (props) => {
                         );
                       })}
                     </span>
-                ),
+                    ),*/
                 filters: [
                     {
-                      text: 'AGROALIMENTAIRE',
-                      value: 'Agroalimentaire',
+                        text: 'AGROALIMENTAIRE',
+                        value: 'Agroalimentaire',
                     },
                     {
                         text: 'TEXTILE',
                         value: 'Textile',
-                      },
+                    },
                 ],
                 onFilter: (value, record) => record.secteurs.indexOf(value) != -1,
                 width: 380
@@ -120,7 +127,7 @@ const TableRessources = (props) => {
                 title: 'Usages',
                 dataIndex: 'usages',
                 key: 'usages',
-                render: tags => (
+                /*render: tags => (
                     <span>
                       {tags.map(tag => {
                         const color = 'geekblue'
@@ -131,26 +138,29 @@ const TableRessources = (props) => {
                         );
                       })}
                     </span>
-                ),
+                ),*/
                 width: 200
             },
-            
+
         ]
+
+        const keycloak = getKeycloakInstance()
 
         if (keycloak && keycloak.authenticated) {
             columns.push({
-            title: 'Action',
-            key: 'action',
-            fixed: 'right',
-            width: 100,
-            render: (text, record) => (
-                <a
-                    onClick={(e) => onModifier(record.key, e) }
-                >
-                  Modifier
-                </a>
-              ),
-        })}
+                title: 'Action',
+                key: 'action',
+                fixed: 'right',
+                width: 100,
+                render: (text, record) => (
+                    <a
+                        onClick={(e) => onModifier(record.id, e)}
+                    >
+                        Modifier
+                    </a>
+                ),
+            })
+        }
 
         return (
 
@@ -159,8 +169,8 @@ const TableRessources = (props) => {
                 <div style={{ whiteSpace: 'pre-line' }}>
                     <Table
                         columns={columns}
-                        dataSource={Array.from(props.ressources.values())}
-                        rowKey="key"
+                        dataSource={Array.from(ressources.values())}
+                        rowKey="id"
                         pagination={{ pageSize: 5 }}
                         useFixedHeader={true}
                         scroll={{ x: "max-content", y: 'calc(100vh - 318px)' }}
@@ -168,7 +178,7 @@ const TableRessources = (props) => {
                 </div>
             </>
         )
-    
+    }
 }
 
 export default TableRessources

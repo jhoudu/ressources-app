@@ -1,13 +1,13 @@
 table, th, td {
-    border: 1px solid #f0f0f0;
-  }
+  border: 1px solid #f0f0f0;
+}
 
-  th, td {
-    padding: 5px;
-    text-align: left;
-  }
+th, td {
+  padding: 5px;
+  text-align: left;
+}
 
-  th {
-    background-color: #fafafa;
-  }
+th {
+  background-color: #fafafa;
+}
 
