@@ -2,6 +2,10 @@ import React, { Component } from 'react'
 import { Table, Tag } from 'antd';
 import { render } from 'react-dom';
 import { getKeycloakInstance } from '@react-keycloak/ssr';
+import moment from 'moment-timezone';
+import { getArrayFromPostgrestString } from '../utils';
+
+import { optionsParcours, optionsSource, optionsCible, optionsSecteurs } from '../constants'
 
 class TableRessources extends Component {
 
@@ -10,45 +14,50 @@ class TableRessources extends Component {
         console.log('construct')
     }
 
+    renderTags = (tags) => {
+
+        if (tags !== null) {
+            <span>
+                {getArrayFromPostgrestString(tags).map(tag => {
+                    const color = 'geekblue'
+                    return (
+                        <Tag color={color} key={tag}>
+                            {tag.toUpperCase()}
+                        </Tag>
+                    );
+                })}
+            </span>
+        }
+    }
+
+    onModifier = (key, e) => {
+        e.preventDefault
+        this.props.selectionnerRessource(key)
+    }
+
+    sortDate = (a, b) => {
+        var da = null
+        var db = null
+        if (a != null && b != null) {
+            da = moment(a)
+            db = moment(b)
+            return da.diff(db, 'days')
+        }
+        else if (a == null && b != null) return -1
+        else if (b == null && a != null) return 1
+        else return 0
+    }
+
+    formatDate = (date) => {
+        if (date != null)
+            return moment(date).format('DD/MM/YYYY')
+    }
+
+
     render() {
         console.log(`${this.constructor.name} : render time`)
 
-        const { selectionnerRessource, ressources } = this.props
-
-        const onModifier = (key, e) => {
-            e.preventDefault
-            selectionnerRessource(key)
-        }
-
-        const sortDate = (a, b) => {
-            //TODO: à améliorer et à refactorer !
-            var parts = null
-            const da = new Date()
-            if (!a) {
-                da.setFullYear('1900')
-                da.setMonth('01')
-                da.setDate('01')
-            } else {
-                parts = String(a).split('/')
-                da.setFullYear(parts[2])
-                da.setMonth(parts[1] - 1)
-                da.setDate(parts[0])
-            }
-
-            const db = new Date()
-            if (!b) {
-                db.setFullYear('1900')
-                db.setMonth('01')
-                db.setDate('01')
-            } else {
-                parts = String(b).split('/')
-                db.setFullYear(parts[2])
-                db.setMonth(parts[1] - 1)
-                db.setDate(parts[0])
-            }
-
-            return (da - db)
-        }
+        const { ressources } = this.props
 
         const columns = [
             {
@@ -57,6 +66,12 @@ class TableRessources extends Component {
                 key: 'titre',
                 render: (text, record) => <a href={record.lien}>{text}</a>,
                 width: 350
+            },
+            {
+                title: 'Parcours',
+                dataIndex: 'parcours',
+                key: 'parcours',
+                width: 120,
             },
             {
                 title: 'Description',
@@ -80,7 +95,8 @@ class TableRessources extends Component {
                 key: 'datepub',
                 width: 110,
                 defaultSortOrder: 'descend',
-                sorter: (a, b) => sortDate(a.datePub, b.datePub)
+                sorter: (a, b) => this.sortDate(a.datepub, b.datepub),
+                render: (date) => this.formatDate(date),
             },
             {
                 title: 'Source',
@@ -92,56 +108,56 @@ class TableRessources extends Component {
                 title: 'Cible',
                 dataIndex: 'cible',
                 key: 'cible',
+                filters: optionsCible,
+                render: (text) => {
+                    var color = '';
+                    if (text !== null) {
+                        if (text === 'Pegi 3' || text === 'Pegi 7')
+                            color = 'green'
+                        else if (text === 'Pegi 12' || text === 'Pegi 16')
+                            color = 'orange';
+                        else
+                            color = 'red';
+                        return (
+                            <Tag color={color} key={text}>
+                                {text}
+                            </Tag>
+
+                        );
+                    }
+
+
+                },
+                onFilter: (value, record) => {
+                    if (record.cible === null) return false
+                    return record.cible.indexOf(value) != -1
+                },
                 width: 120
             },
             {
                 title: 'Secteurs',
                 dataIndex: 'secteurs',
                 key: 'secteurs',
-                /*render: tags => (
+                render: tags => (
                     <span>
-                      {tags.map(tag => {
-                        const color = 'geekblue'
-                        return (
-                          <Tag color={color} key={tag}>
-                            {tag.toUpperCase()}
-                          </Tag>
-                        );
-                      })}
+                        {getArrayFromPostgrestString(tags).map(tag => {
+                            const color = 'geekblue'
+                            return (
+                                <Tag color={color} key={tag}>
+                                    {tag.toUpperCase()}
+                                </Tag>
+                            );
+                        })}
                     </span>
-                    ),*/
-                filters: [
-                    {
-                        text: 'AGROALIMENTAIRE',
-                        value: 'Agroalimentaire',
-                    },
-                    {
-                        text: 'TEXTILE',
-                        value: 'Textile',
-                    },
-                ],
-                onFilter: (value, record) => record.secteurs.indexOf(value) != -1,
-                width: 380
+                ),
+                filters: optionsSecteurs,
+                onFilter: (value, record) => {
+                    if (record.secteurs === null) return false
+                    return record.secteurs.indexOf(value) != -1
+                    
+                },
+                width: 280
             },
-            {
-                title: 'Usages',
-                dataIndex: 'usages',
-                key: 'usages',
-                /*render: tags => (
-                    <span>
-                      {tags.map(tag => {
-                        const color = 'geekblue'
-                        return (
-                          <Tag color={color} key={tag}>
-                            {tag.toUpperCase()}
-                          </Tag>
-                        );
-                      })}
-                    </span>
-                ),*/
-                width: 200
-            },
-
         ]
 
         const keycloak = getKeycloakInstance()
@@ -154,7 +170,7 @@ class TableRessources extends Component {
                 width: 100,
                 render: (text, record) => (
                     <a
-                        onClick={(e) => onModifier(record.id, e)}
+                        onClick={(e) => this.onModifier(record.id, e)}
                     >
                         Modifier
                     </a>

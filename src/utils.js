@@ -1,7 +1,7 @@
 
 const serverEnv = (key, def) => process?.env?.[key] ?? def
 
-function getKeycloakConfig() {
+export function getKeycloakConfig() {
   return typeof window !== 'undefined' && window.env !== 'undefined'
     ? {
         // client
@@ -17,8 +17,17 @@ function getKeycloakConfig() {
       }
 }
 
-function getPostgRestConfig() {
+export function getPostgRestConfig() {
   return 'http://localhost:3003/'
 }
 
-export { getKeycloakConfig, getPostgRestConfig }
+export function getArrayFromPostgrestString(string) {
+  try {
+    if (string != null)
+    return string.replace(/"|\n|\[|\]/g,'').split(',').map(x => { return x.trim() });
+  else
+    return new Array();
+  } catch (e) {
+    return string
+  }
+}

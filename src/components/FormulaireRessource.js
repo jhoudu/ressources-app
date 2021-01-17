@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
-import { Form, Input, Button, Space } from 'antd';
+import { Form, Input, Button, Space, DatePicker, Select } from 'antd';
+import moment from 'moment-timezone';
+import { optionsParcours, optionsSource, optionsCible, optionsSecteurs } from '../constants'
+import { getArrayFromPostgrestString } from '../utils';
 
 const { Item } = Form;
 const { TextArea } = Input;
@@ -13,12 +16,18 @@ class FormulaireRessource extends Component {
     formRef = React.createRef();
 
     componentDidMount() {
-        const { titre, lien, description } = this.props.ressource
+        const { titre, lien, parcours , description, datepub, source, cible, secteurs, usages } = this.props.ressource
         this.formRef.current.setFieldsValue(
             {
                 titre: titre,
                 lien: lien,
-                description: description
+                parcours: parcours,
+                description: description,
+                datepub: datepub == null ? null : moment(datepub),
+                source: source,
+                cible: cible,
+                secteurs: getArrayFromPostgrestString(secteurs),
+                usages: usages,
             });
     }
 
@@ -31,13 +40,21 @@ class FormulaireRessource extends Component {
             }
         }
 
+        const dateFormat = 'DD/MM/YYYY';
+
         // prend la ressource et la remonte
         const onFinish = (values) => {
             const ressource = { ...this.state.ressource }
-            const { titre, lien, description } = values
+            const { titre, lien, parcours, description, datepub, source, cible, secteurs, usages } = values
             ressource.titre = titre
             ressource.lien = lien
+            ressource.parcours = parcours
             ressource.description = description
+            ressource.datepub = datepub
+            ressource.source = source
+            ressource.cible = cible
+            ressource.secteurs = secteurs
+            ressource.usages = usages
             this.props.onDataUpdate(ressource)
         }
 
@@ -60,7 +77,6 @@ class FormulaireRessource extends Component {
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
                     initialValues={this.state.ressources}>
-
                     <Item
                         label="Titre"
                         name="titre"
@@ -73,7 +89,13 @@ class FormulaireRessource extends Component {
                     >
                         <Input />
                     </Item>
-
+                    <Item
+                        label="Parcours"
+                        name="parcours"
+                    >
+                        <Select options={optionsParcours} style={{ width: 150 }} >
+                        </Select>
+                    </Item>
                     <Item
                         label="Lien"
                         name="lien"
@@ -94,6 +116,34 @@ class FormulaireRessource extends Component {
                         <TextArea />
                     </Item>
 
+                    <Item
+                        label="Date publication"
+                        name="datepub"
+                    >
+                        <DatePicker format={dateFormat} />
+                    </Item>
+                    <Item
+                        label="Source"
+                        name="source">
+                        <Select options={optionsSource} style={{ width: 150 }} >
+                        </Select>
+                    </Item>
+                    <Item
+                        label="Cible"
+                        name="cible">
+                        <Select options={optionsCible} style={{ width: 150 }} >
+                        </Select>
+                    </Item>
+                    <Item
+                        label="Secteurs"
+                        name="secteurs">
+                        <Select
+                            mode="multiple"
+                            style={{ width: '100%' }}
+                            placeholder="Please select"
+                            options={optionsSecteurs}
+                        />
+                    </Item>
                     <Item {...tailLayout}>
                         <Space>
                             <Button onClick={e => handleClick(e)}>

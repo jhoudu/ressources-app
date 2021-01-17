@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import TableRessources from './TableRessources'
 import FormulaireRessource from './FormulaireRessource'
 
-import fichierRessources from '../ressources'
-
 class GestionRessources extends Component {
 
     constructor(props) {

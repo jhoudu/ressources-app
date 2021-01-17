@@ -5,10 +5,6 @@ const fetch = require('node-fetch');
 
 class APITest extends Component {
 
-    //TODO: Trouver pourquoi le composant est appelé deux fois sur le refresh.
-    // Lié au refresh ?
-
-
     state = {
         response: [],
         responsePOST: []
@@ -20,7 +16,7 @@ class APITest extends Component {
 
     async componentDidMount() {
         await this.fectchListTodos();
-        await this.fectchPOSTTodo();
+        //await this.fectchPOSTTodo();
     }
 
     async fectchListTodos() {
@@ -72,9 +68,9 @@ class APITest extends Component {
                 <div style={{ overflowY: 'scroll', height: 'calc(100vh - 330px)' }}>
                     <pre >{JSON.stringify(this.state.response, undefined, 2)}</pre>
                 </div>
-                <br />
+                {/*<br />
                 <h2>Ecriture (POST)</h2>
-                <pre>Status : {this.state.responsePOST["status"]}</pre>
+                <pre>Status : {this.state.responsePOST["status"]}</pre>*/}
             </>
         )
     }
