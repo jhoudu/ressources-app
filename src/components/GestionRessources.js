@@ -23,6 +23,7 @@ class GestionRessources extends Component {
             !this.state.id ?
                 <TableRessources
                     ressources={this.props.datas}
+                    onDataDelete={this.props.onDataDelete}
                     selectionnerRessource={this.selectionnerRessource}
                 /> :
                 <FormulaireRessource

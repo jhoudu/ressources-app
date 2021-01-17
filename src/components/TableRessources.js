@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { Table, Tag } from 'antd';
+import { Table, Tag, Space, Button } from 'antd';
 import { render } from 'react-dom';
 import { getKeycloakInstance } from '@react-keycloak/ssr';
 import moment from 'moment-timezone';
 import { getArrayFromPostgrestString } from '../utils';
+import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
 import { optionsParcours, optionsSource, optionsCible, optionsSecteurs } from '../constants'
 
@@ -154,7 +155,7 @@ class TableRessources extends Component {
                 onFilter: (value, record) => {
                     if (record.secteurs === null) return false
                     return record.secteurs.indexOf(value) != -1
-                    
+
                 },
                 width: 280
             },
@@ -164,16 +165,16 @@ class TableRessources extends Component {
 
         if (keycloak && keycloak.authenticated) {
             columns.push({
-                title: 'Action',
+                title: 'Actions',
                 key: 'action',
                 fixed: 'right',
                 width: 100,
+                align: 'center',
                 render: (text, record) => (
-                    <a
-                        onClick={(e) => this.onModifier(record.id, e)}
-                    >
-                        Modifier
-                    </a>
+                    <Space size='middle'>
+                        <EditOutlined onClick={(e) => this.onModifier(record.id, e)} />
+                        <DeleteOutlined onClick={(e) => this.props.onDataDelete(record.id)} />
+                    </Space>
                 ),
             })
         }
@@ -182,16 +183,20 @@ class TableRessources extends Component {
 
             <>
                 <h1>Liste des ressources</h1>
+
                 <div style={{ whiteSpace: 'pre-line' }}>
-                    <Table
-                        columns={columns}
-                        dataSource={Array.from(ressources.values())}
-                        rowKey="id"
-                        pagination={{ pageSize: 5 }}
-                        useFixedHeader={true}
-                        scroll={{ x: "max-content", y: 'calc(100vh - 318px)' }}
-                    />
+                    <Space direction="vertical" style={{ width: '100%' }}><Button>Ajouter une ressource</Button>
+                        <Table
+                            columns={columns}
+                            dataSource={Array.from(ressources.values())}
+                            rowKey="id"
+                            pagination={{ pageSize: 5 }}
+                            useFixedHeader={true}
+                            scroll={{ x: "max-content", y: 'calc(100vh - 318px)' }}
+                        />
+                    </Space>
                 </div>
+
             </>
         )
     }

@@ -15,6 +15,7 @@ function withPostgRestFecth(WrappedComponent, resourceName, keyName) {
                 datas: {},
                 data: {},
                 ready: false,
+                id: '',
             }
         }
 
@@ -26,11 +27,15 @@ function withPostgRestFecth(WrappedComponent, resourceName, keyName) {
         async componentDidUpdate (prevProps, prevState) {
             console.log(`${this.constructor.name} : Component did update`)
             if (prevState.datas === this.state.datas) {
-                console.log(`${this.constructor.name} : condition 1 d\'update vérifiée !`)
+                console.log(`${this.constructor.name} : condition d'action vérifiée !`)
                 if (Object.keys(this.state.data).length !== 0 && prevState.data !== this.state.data) {
-                    console.log(`${this.constructor.name} : condition 2 d\'update vérifiée !`)
+                    console.log(`${this.constructor.name} : condition d\'update vérifiée !`)
                     this.state.datas.set(this.state.data.id,this.state.data)
                     await this.updateResource(this.state.data)
+                } else if(this.state.id !== '' && prevState.id !== this.state.id) {
+                    console.log(`${this.constructor.name} : condition de delete vérifiée !`)
+                    this.state.datas.delete(this.state.id)
+                    await this.deleteResource(this.state.id)
                 }
             }
         }
@@ -39,6 +44,10 @@ function withPostgRestFecth(WrappedComponent, resourceName, keyName) {
         onDataUpdate = data => {
             this.setState({data: data, ready: false,})
          }
+
+        onDataDelete = id => {
+            this.setState({id: id,})
+        }
 
         async getListResources () {
             console.log('Lecture'); 
@@ -93,10 +102,34 @@ function withPostgRestFecth(WrappedComponent, resourceName, keyName) {
             };
         }
 
+        async deleteResource (id) {
+            console.log('Delete');
+            this.setState({ready: false})
+            const keycloak = getKeycloakInstance()
+    
+            const requestheaders = 
+            {
+                "Authorization": "Bearer " + keycloak["token"],
+            }
+    
+            try {
+                const response = await fetch(getPostgRestConfig() + resourceName + '?id=eq.' + id, {
+                    "method": "DELETE",
+                    "headers": requestheaders,
+                })
+                this.status = response["status"]
+                console.log('status')
+                console.log(this.status)
+                this.setState({ ready: true })
+            } catch (err) {
+                console.log(err); 
+            };
+        }
+
         render () {
             const {datas} = this.state
             console.log(`${this.constructor.name} : render time for ${this.state.ready?'Wrapped':'Chargement'}`)
-            return this.state.ready?<WrappedComponent datas={datas} onDataUpdate={this.onDataUpdate} />:<p>Chargement des données.</p>
+            return this.state.ready?<WrappedComponent datas={datas} onDataUpdate={this.onDataUpdate} onDataDelete={this.onDataDelete}/>:<p>Chargement des données.</p>
         }
     }
 }
