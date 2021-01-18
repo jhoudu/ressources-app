@@ -9,26 +9,24 @@ const { TextArea } = Input;
 
 class FormulaireRessource extends Component {
 
-    state = {
-        ressource: this.props.ressource
-    }
-
     formRef = React.createRef();
 
     componentDidMount() {
-        const { titre, lien, parcours , description, datepub, source, cible, secteurs, usages } = this.props.ressource
-        this.formRef.current.setFieldsValue(
-            {
-                titre: titre,
-                lien: lien,
-                parcours: parcours,
-                description: description,
-                datepub: datepub == null ? null : moment(datepub),
-                source: source,
-                cible: cible,
-                secteurs: getArrayFromPostgrestString(secteurs),
-                usages: usages,
-            });
+        if (this.props.ressource !== undefined) {
+            const { titre, lien, parcours, description, datepub, source, cible, secteurs, usages } = this.props.ressource
+            this.formRef.current.setFieldsValue(
+                {
+                    titre: titre,
+                    lien: lien,
+                    parcours: parcours,
+                    description: description,
+                    datepub: datepub == null ? null : moment(datepub),
+                    source: source,
+                    cible: cible,
+                    secteurs: getArrayFromPostgrestString(secteurs),
+                    usages: usages,
+                });
+        }
     }
 
     render() {
@@ -44,8 +42,11 @@ class FormulaireRessource extends Component {
 
         // prend la ressource et la remonte
         const onFinish = (values) => {
-            const ressource = { ...this.state.ressource }
+            const ressource = {}
             const { titre, lien, parcours, description, datepub, source, cible, secteurs, usages } = values
+            if (this.props.ressource !== undefined) {
+                ressource.id = this.props.ressource.id
+            }
             ressource.titre = titre
             ressource.lien = lien
             ressource.parcours = parcours
@@ -76,7 +77,7 @@ class FormulaireRessource extends Component {
                     name='basic'
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
-                    initialValues={this.state.ressources}>
+                    initialValues={this.props.ressource}>
                     <Item
                         label="Titre"
                         name="titre"

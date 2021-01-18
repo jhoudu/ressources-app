@@ -31,8 +31,9 @@ class TableRessources extends Component {
         }
     }
 
-    onModifier = (key, e) => {
+    onModifier = (e, key) => {
         e.preventDefault
+        console.log(key)
         this.props.selectionnerRessource(key)
     }
 
@@ -172,20 +173,24 @@ class TableRessources extends Component {
                 align: 'center',
                 render: (text, record) => (
                     <Space size='middle'>
-                        <EditOutlined onClick={(e) => this.onModifier(record.id, e)} />
-                        <DeleteOutlined onClick={(e) => this.props.onDataDelete(record.id)} />
+                        <EditOutlined onClick={(e) => this.onModifier(e, record.id)} />
+                        <DeleteOutlined onClick={() => this.props.onDataDelete(record.id)} />
                     </Space>
                 ),
             })
         }
 
-        return (
+        const showAddButtonHandler = () => {
+            if(keycloak && keycloak.authenticated)
+                return <Button  onClick={(e) => this.onModifier(e)}>Ajouter une ressource</Button>;
+        } 
 
+        return (
             <>
                 <h1>Liste des ressources</h1>
-
                 <div style={{ whiteSpace: 'pre-line' }}>
-                    <Space direction="vertical" style={{ width: '100%' }}><Button>Ajouter une ressource</Button>
+                    <Space direction="vertical" style={{ width: '100%' }}>
+                        {showAddButtonHandler()}
                         <Table
                             columns={columns}
                             dataSource={Array.from(ressources.values())}
@@ -196,7 +201,6 @@ class TableRessources extends Component {
                         />
                     </Space>
                 </div>
-
             </>
         )
     }

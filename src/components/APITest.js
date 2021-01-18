@@ -15,11 +15,11 @@ class APITest extends Component {
     }
 
     async componentDidMount() {
-        await this.fectchListTodos();
-        //await this.fectchPOSTTodo();
+        await this.fectchListResources();
+        //await this.fectchPOSTResource();
     }
 
-    async fectchListTodos() {
+    async fectchListResources() {
         console.log('Lecture');
 
         try {
@@ -35,7 +35,7 @@ class APITest extends Component {
         };
     }
 
-    async fectchPOSTTodo() {
+    async fectchPOSTResource() {
         console.log('Ecriture');
 
         const keycloak = this.props.keycloak

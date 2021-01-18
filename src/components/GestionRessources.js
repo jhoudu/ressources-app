@@ -8,19 +8,24 @@ class GestionRessources extends Component {
         console.log('construct')
         super(props);
         this.state = {
-            id: '',
+            id: 0,
+            create: false,
         }
     }
 
     selectionnerRessource = id => {
-        this.setState({ id })
+        if(id === undefined) {
+            this.setState({ create: true })
+        } else {
+            this.setState({ id })
+        }
     }
 
     render() {
         console.log(`${this.constructor.name} : render time`)
 
         return (
-            !this.state.id ?
+            !(this.state.id || this.state.create) ?
                 <TableRessources
                     ressources={this.props.datas}
                     onDataDelete={this.props.onDataDelete}

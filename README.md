@@ -3,10 +3,9 @@
 Frontend with following functions :  
 
 * Authentication and authorization
-* Web resources list (title, description, link)
-* Test API :
-  * SELECT
-  * POST authorized only if connected and have the role for
+* Web resources list (title, description, link) with:
+  * CRUD
+  * CRD authorized only if connected and have the role for
 
 ## Usage
 docker-compose --env-file ./.env up  
