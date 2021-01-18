@@ -33,8 +33,12 @@ class TableRessources extends Component {
 
     onModifier = (e, key) => {
         e.preventDefault
-        console.log(key)
         this.props.selectionnerRessource(key)
+    }
+
+    onAjouter = (e, key) => {
+        e.preventDefault
+        this.props.selectionnerRessource(-1)
     }
 
     sortDate = (a, b) => {
@@ -182,7 +186,7 @@ class TableRessources extends Component {
 
         const showAddButtonHandler = () => {
             if(keycloak && keycloak.authenticated)
-                return <Button  onClick={(e) => this.onModifier(e)}>Ajouter une ressource</Button>;
+                return <Button  onClick={(e) => this.onAjouter(e)}>Ajouter une ressource</Button>;
         } 
 
         return (

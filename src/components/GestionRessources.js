@@ -25,7 +25,7 @@ class GestionRessources extends Component {
         console.log(`${this.constructor.name} : render time`)
 
         return (
-            !(this.state.id || this.state.create) ?
+            !(this.state.id != 0 || this.state.create) ?
                 <TableRessources
                     ressources={this.props.datas}
                     onDataDelete={this.props.onDataDelete}

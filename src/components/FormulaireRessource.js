@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import { Form, Input, Button, Space, DatePicker, Select } from 'antd';
-import moment from 'moment-timezone';
+import moment from 'moment';
 import { optionsParcours, optionsSource, optionsCible, optionsSecteurs } from '../constants'
 import { getArrayFromPostgrestString } from '../utils';
 
 const { Item } = Form;
 const { TextArea } = Input;
+
+const dateFormat = 'DD/MM/YYYY';
 
 class FormulaireRessource extends Component {
 
@@ -14,16 +16,18 @@ class FormulaireRessource extends Component {
     componentDidMount() {
         if (this.props.ressource !== undefined) {
             const { titre, lien, parcours, description, datepub, source, cible, secteurs, usages } = this.props.ressource
+            
             this.formRef.current.setFieldsValue(
+
                 {
                     titre: titre,
                     lien: lien,
                     parcours: parcours,
                     description: description,
-                    datepub: datepub == null ? null : moment(datepub),
+                    datepub: datepub === null ? null : moment(datepub),
                     source: source,
                     cible: cible,
-                    secteurs: getArrayFromPostgrestString(secteurs),
+                    secteurs: secteurs === '' || secteurs === undefined ? null : getArrayFromPostgrestString(secteurs),
                     usages: usages,
                 });
         }
@@ -38,8 +42,6 @@ class FormulaireRessource extends Component {
             }
         }
 
-        const dateFormat = 'DD/MM/YYYY';
-
         // prend la ressource et la remonte
         const onFinish = (values) => {
             const ressource = {}
@@ -53,8 +55,8 @@ class FormulaireRessource extends Component {
             ressource.description = description
             ressource.datepub = datepub
             ressource.source = source
-            ressource.cible = cible
-            ressource.secteurs = secteurs
+            ressource.cible = cible === '' || cible === undefined ? null : cible,
+            ressource.secteurs = secteurs === null || secteurs === undefined || secteurs === '' ? null : secteurs
             ressource.usages = usages
             this.props.onDataUpdate(ressource)
         }
@@ -66,7 +68,7 @@ class FormulaireRessource extends Component {
         // bouton annuler
         const handleClick = (e) => {
             e.preventDefault
-            this.props.selectionnerRessource('')
+            this.props.selectionnerRessource(0)
         }
 
         return (
@@ -117,12 +119,12 @@ class FormulaireRessource extends Component {
                         <TextArea />
                     </Item>
 
-                    <Item
+                    {/*<Item
                         label="Date publication"
                         name="datepub"
                     >
                         <DatePicker format={dateFormat} />
-                    </Item>
+                    </Item>*/}
                     <Item
                         label="Source"
                         name="source">

@@ -35,7 +35,7 @@ function withPostgRestFecth(WrappedComponent, resourceName, keyName) {
                     console.log(`${this.constructor.name} : condition create ou update vérifiée !`)
                     if (this.state.data.id === undefined) {
                         console.log(`${this.constructor.name} : condition de create vérifiée !`)
-                        await this.createResource(this.state.data)
+                        await this.createResource()
                     } else {
                         console.log(`${this.constructor.name} : condition d\'update vérifiée !`)
                         await this.updateResource(this.state.data)
@@ -50,7 +50,6 @@ function withPostgRestFecth(WrappedComponent, resourceName, keyName) {
         // fonction à passer pour créer ou updater une données
         onDataUpdate = data => {
             this.setState({ data: data, })
-
         }
 
         onDataDelete = id => {
@@ -70,10 +69,16 @@ function withPostgRestFecth(WrappedComponent, resourceName, keyName) {
                 if (json.length != 0) {
                     datasMAP = new Map(json.map(i => [i[keyName], i]))
                 }
+                {/*datasMAP.forEach((value, key) => {
+                if (value.datepub !== undefined)
+                    //value.datepub = value.datepub.replace(/.\w*\+/g,'+');
+                    value.datepub = value.datepub.replace(/00:00/g,'01:00').replace(/.\w*\+/g,'+');
+                })*/}
 
                 this.status = response["status"]
                 console.log('status lecture')
                 console.log(this.status)
+                
                 this.setState({ datas: datasMAP, ready: true })
 
 
@@ -82,10 +87,16 @@ function withPostgRestFecth(WrappedComponent, resourceName, keyName) {
             };
         }
 
-        async updateResource(resource) {
+        async updateResource() {
             console.log('Modification');
             this.setState({ ready: false })
             const keycloak = getKeycloakInstance()
+            const resource = this.state.data;
+            if (resource.secteurs !== undefined && resource.secteurs !== null && resource.secteurs.length !== 0) {
+                resource.secteurs = resource.secteurs.join(',')
+            } else {
+                resource.secteurs = null
+            }
 
             const requestheaders =
             {
@@ -111,11 +122,16 @@ function withPostgRestFecth(WrappedComponent, resourceName, keyName) {
             };
         }
 
-        async createResource(resource) {
+        async createResource() {
             console.log('Création');
             this.setState({ ready: false })
             const keycloak = getKeycloakInstance()
-
+            const resource = this.state.data;
+            if (resource.secteurs !== undefined && resource.secteurs !== null && resource.secteurs.length !== 0) {
+                resource.secteurs = resource.secteurs.join(',')
+            } else {
+                resource.secteurs = null
+            }
             const requestheaders =
             {
                 "content-type": "application/json",
@@ -144,7 +160,7 @@ function withPostgRestFecth(WrappedComponent, resourceName, keyName) {
             };
         }
 
-        async deleteResource(id) {
+        async deleteResource() {
             console.log('Suppression');
             this.setState({ ready: false })
             const keycloak = getKeycloakInstance()
@@ -155,7 +171,7 @@ function withPostgRestFecth(WrappedComponent, resourceName, keyName) {
             }
 
             try {
-                const response = await fetch(getPostgRestConfig() + resourceName + '?id=eq.' + id, {
+                const response = await fetch(getPostgRestConfig() + resourceName + '?id=eq.' + this.state.id, {
                     "method": "DELETE",
                     "headers": requestheaders,
                 })

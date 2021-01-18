@@ -24,7 +24,8 @@ export function getPostgRestConfig() {
 export function getArrayFromPostgrestString(string) {
   try {
     if (string != null)
-    return string.replace(/"|\n|\[|\]/g,'').split(',').map(x => { return x.trim() });
+    return string.replace(/"|\n *|\[| *\]/g,'').split(',');
+    
   else
     return new Array();
   } catch (e) {
