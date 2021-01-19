@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Table, Tag, Space, Button } from 'antd';
 import { render } from 'react-dom';
 import { getKeycloakInstance } from '@react-keycloak/ssr';
-import moment from 'moment-timezone';
+import moment from 'moment';
 import { getArrayFromPostgrestString } from '../utils';
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
@@ -17,7 +17,7 @@ class TableRessources extends Component {
 
     renderTags = (tags) => {
 
-        if (tags !== null) {
+        if (tags) {
             <span>
                 {getArrayFromPostgrestString(tags).map(tag => {
                     const color = 'geekblue'
@@ -117,7 +117,7 @@ class TableRessources extends Component {
                 filters: optionsCible,
                 render: (text) => {
                     var color = '';
-                    if (text !== null) {
+                    if (text) {
                         if (text === 'Pegi 3' || text === 'Pegi 7')
                             color = 'green'
                         else if (text === 'Pegi 12' || text === 'Pegi 16')
@@ -145,6 +145,7 @@ class TableRessources extends Component {
                 dataIndex: 'secteurs',
                 key: 'secteurs',
                 render: tags => (
+                    tags ?
                     <span>
                         {getArrayFromPostgrestString(tags).map(tag => {
                             const color = 'geekblue'
@@ -154,7 +155,7 @@ class TableRessources extends Component {
                                 </Tag>
                             );
                         })}
-                    </span>
+                    </span>:null
                 ),
                 filters: optionsSecteurs,
                 onFilter: (value, record) => {

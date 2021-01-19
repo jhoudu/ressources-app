@@ -69,19 +69,12 @@ function withPostgRestFecth(WrappedComponent, resourceName, keyName) {
                 if (json.length != 0) {
                     datasMAP = new Map(json.map(i => [i[keyName], i]))
                 }
-                {/*datasMAP.forEach((value, key) => {
-                if (value.datepub !== undefined)
-                    //value.datepub = value.datepub.replace(/.\w*\+/g,'+');
-                    value.datepub = value.datepub.replace(/00:00/g,'01:00').replace(/.\w*\+/g,'+');
-                })*/}
 
                 this.status = response["status"]
                 console.log('status lecture')
                 console.log(this.status)
                 
                 this.setState({ datas: datasMAP, ready: true })
-
-
             } catch (err) {
                 console.log(err);
             };

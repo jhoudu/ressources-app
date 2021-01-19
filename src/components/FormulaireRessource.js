@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { Form, Input, Button, Space, DatePicker, Select } from 'antd';
-import moment from 'moment';
 import { optionsParcours, optionsSource, optionsCible, optionsSecteurs } from '../constants'
 import { getArrayFromPostgrestString } from '../utils';
+
+import moment from 'moment';
 
 const { Item } = Form;
 const { TextArea } = Input;
@@ -11,25 +12,29 @@ const dateFormat = 'DD/MM/YYYY';
 
 class FormulaireRessource extends Component {
 
+    // Sert pour modifier les valeurs du formulaire
     formRef = React.createRef();
 
-    componentDidMount() {
-        if (this.props.ressource !== undefined) {
+    getInitialValues() {
+        if (this.props.ressource) {
             const { titre, lien, parcours, description, datepub, source, cible, secteurs, usages } = this.props.ressource
-            
-            this.formRef.current.setFieldsValue(
 
-                {
-                    titre: titre,
-                    lien: lien,
-                    parcours: parcours,
-                    description: description,
-                    datepub: datepub === null ? null : moment(datepub),
-                    source: source,
-                    cible: cible,
-                    secteurs: secteurs === '' || secteurs === undefined ? null : getArrayFromPostgrestString(secteurs),
-                    usages: usages,
-                });
+            //console.log('datepub')
+            //console.log(datepub)
+            //console.log(datepub ? moment(datepub).locale('fr') : null);
+
+            const initialV = {}
+            initialV.titre = titre;
+            initialV.lien = lien;
+            initialV.parcours = parcours;
+            initialV.description = description;
+            initialV.datepub = datepub ? moment(datepub).locale('fr') : null;
+            initialV.source = source;
+            initialV.cible = cible;
+            initialV.secteurs = getArrayFromPostgrestString(secteurs);
+            initialV.usages = usages;
+
+            return initialV;
         }
     }
 
@@ -55,8 +60,8 @@ class FormulaireRessource extends Component {
             ressource.description = description
             ressource.datepub = datepub
             ressource.source = source
-            ressource.cible = cible === '' || cible === undefined ? null : cible,
-            ressource.secteurs = secteurs === null || secteurs === undefined || secteurs === '' ? null : secteurs
+            ressource.cible = cible ? cible : null,
+            ressource.secteurs = secteurs ? secteurs : null,
             ressource.usages = usages
             this.props.onDataUpdate(ressource)
         }
@@ -79,7 +84,7 @@ class FormulaireRessource extends Component {
                     name='basic'
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
-                    initialValues={this.props.ressource}>
+                    initialValues={this.getInitialValues()}>
                     <Item
                         label="Titre"
                         name="titre"
@@ -119,12 +124,13 @@ class FormulaireRessource extends Component {
                         <TextArea />
                     </Item>
 
-                    {/*<Item
+                    <Item
                         label="Date publication"
                         name="datepub"
                     >
                         <DatePicker format={dateFormat} />
-                    </Item>*/}
+                    </Item>
+
                     <Item
                         label="Source"
                         name="source">
