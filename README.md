@@ -1,11 +1,10 @@
-# Prototype of frontend for Back-Office
+# Prototype of Back-Office
 
-Frontend with following functions :  
+Back-office with the following functions :  
 
 * Authentication and authorization
-* Web resources list (title, description, link) with:
-  * CRUD
-  * CRD authorized only if connected and have the role for
+* CRUD of Web resources list (title, description, link)
+* CUD authorized only if connected and have the role for
 
 ## Usage
 docker-compose --project-name ressources-app --env-file ./.env up  
