@@ -17,7 +17,7 @@ Login : jehoudu / kepass
 
 Name         | Description   | Located at
 ------------ | ------------- | -------------
-Razzle | Server Frontend | http://localhost:3000/
+Node.js/Razzle | Server Frontend | http://localhost:3000/
 Keycloack | Authentication & Authorization | http://localhost:8080/
 PostgREST | RESTFull API for PostgreSQL | http://localhost:3003/
 PostgreSQL | SGBD | 
