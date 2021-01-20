@@ -10,6 +10,8 @@ import './App.css'
 import HeaderApp from './components/HeaderApp'
 import { Layout } from 'antd';
 
+import {getKeycloakConfig, getPostgRestConfig} from './utils'
+
 // keycloack
 import { useKeycloak } from '@react-keycloak/ssr'
 
@@ -21,6 +23,8 @@ const GestionRessourcesWithFP = withPostgRestFecth(GestionRessources, 'ressource
 
 const App = () => {
   console.log('App');
+  console.log(getKeycloakConfig())
+  console.log(getPostgRestConfig())
   const { keycloak, initialized } = useKeycloak()
   return (
 

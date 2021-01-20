@@ -1,0 +1,13 @@
+build
+cache
+initdb
+initkeycloak
+node_modules
+#public
+#src
+.dockerignore
+.gitattributes
+.gitignore
+Dockerfile
+#README.md
+#sandbox.config.json

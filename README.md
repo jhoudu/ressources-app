@@ -17,14 +17,14 @@ Login : jehoudu / kepass
 
 Name         | Description   | Located at
 ------------ | ------------- | -------------
-Node.js | Javascript runtime | http://localhost:3000/
+Razzle | Server Frontend | http://localhost:3000/
 Keycloack | Authentication & Authorization | http://localhost:8080/
 PostgREST | RESTFull API for PostgreSQL | http://localhost:3003/
 PostgreSQL | SGBD | 
 Swagger | Visual overview of the API | http://localhost:8088/
 
 ## Docker
-docker-compose except for node server.  
+docker-compose for all servers.  
 Initialization of Postgres and Keycloak  
 
 ## Javascript libraries
