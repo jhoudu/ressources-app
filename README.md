@@ -8,7 +8,7 @@ Frontend with following functions :
   * CRD authorized only if connected and have the role for
 
 ## Usage
-docker-compose --env-file ./.env up  
+docker-compose --project-name ressources-app --env-file ./.env up  
 
 ## Frontend
 http://localhost:3000/  
