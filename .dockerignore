@@ -10,4 +10,4 @@ node_modules
 .gitignore
 Dockerfile
 #README.md
-#sandbox.config.json
+sandbox.config.json

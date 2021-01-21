@@ -12,22 +12,18 @@ services:
     container_name: node.js
     ports:
       - "3000:3000"
-    links:
-      - api:api
-      - keycloak:keycloak
     environment:
       COMPOSE_KEYCLOAK_URL: http://keycloak:8080
       COMPOSE_POSTGREST_URL : http://api:3000
     depends_on:
       - api
+      - keycloak
 
   api:
     image: postgrest/postgrest
     container_name: postgresql
     ports:
       - "${POSTGREST_HOST_PORT}:3000"
-    links:
-      - db:db
     environment:
       PGRST_DB_URI: postgres://${DB_CONN_ROLE}:${DB_CONN_PWD}@db:5432/${POSTGRES_DB}
       PGRST_DB_SCHEMA: ${DB_SCHEMA}
