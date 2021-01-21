@@ -16,6 +16,8 @@ class HeaderApp extends Component {
         } else if (item.key == 3) {
             this.props.history.push("/apitest")
         } else if (item.key == 4) {
+            this.props.history.push("/keycloaktest")
+        } else if (item.key == 5) {
             this.props.history.push("/about")
         }
     }
@@ -32,7 +34,8 @@ class HeaderApp extends Component {
                     <Menu.Item key="1" onClick={this.handleClick}>Accueil</Menu.Item>
                     <Menu.Item key="2" onClick={this.handleClick}>Gestion des ressources</Menu.Item>
                     <Menu.Item key="3" onClick={this.handleClick}>Test API</Menu.Item>
-                    <Menu.Item key="4" onClick={this.handleClick}>A propos</Menu.Item>
+                    <Menu.Item key="4" onClick={this.handleClick}>Test Keycloak</Menu.Item>
+                    <Menu.Item key="5" onClick={this.handleClick}>A propos</Menu.Item>
                 </Menu>
 
             </Header>
