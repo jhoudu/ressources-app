@@ -66,8 +66,16 @@ services:
     environment:
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: admin
-      KEYCLOAK_IMPORT: /tmp/proto.json
+      KEYCLOAK_IMPORT: /tmp/proto.json #a commenter pour init
     volumes:
-    #  - "./initkeycloak:/tmp"
-      - ./initkeycloak/proto.json:/tmp/proto.json
+    #  - "./initkeycloak:/tmp" #a décommenter pour init
+      - ./initkeycloak/proto.json:/tmp/proto.json #a commenter pour init
 
+  solr:
+    image: solr
+    container_name: solr 
+    ports :
+      - 8983:8983
+    command:
+      - solr-precreate
+      - ressources
