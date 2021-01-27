@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { withKeycloak } from '@react-keycloak/ssr';
+import { getPostgRestConfig } from '../utils'
 
 const fetch = require('node-fetch');
 
@@ -21,9 +22,10 @@ class APITest extends Component {
 
     async fectchListResources() {
         console.log('Lecture');
+        console.log(getPostgRestConfig() + 'ressources')
 
         try {
-            const response = await fetch("http://localhost:3003/ressources", {
+            const response = await fetch(getPostgRestConfig() + 'ressources', {
                 "method": "GET"
             })
             const json = await response.json()
@@ -47,7 +49,7 @@ class APITest extends Component {
         }
 
         try {
-            const response = await fetch("http://localhost:3003/ressources", {
+            const response = await fetch(getPostgRestConfig() + 'ressources', {
                 "method": "POST",
                 "headers": requestheaders,
                 "body": "{\"titre\": \"github frontend ressources\", \"lien\": \"https://github.com/jhoudu/frontend-ressources-app\"}"
@@ -65,7 +67,7 @@ class APITest extends Component {
             <>
                 <h1>Test d'appels de l'API PostgREST.</h1>
                 <h2>Lecture (GET)</h2>
-                <div style={{ overflowY: 'scroll', height: 'calc(100vh - 330px)' }}>
+                <div style={{ overflowY: 'scroll', height: 'calc(100vh - 230px)' }}>
                     <pre >{JSON.stringify(this.state.response, undefined, 2)}</pre>
                 </div>
                 {/*<br />
