@@ -21,7 +21,7 @@ services:
 
   api:
     image: postgrest/postgrest
-    container_name: postgresql
+    container_name: postgREST
     ports:
       - "${POSTGREST_HOST_PORT}:3000"
     environment:
@@ -35,7 +35,7 @@ services:
 
   db:
     image: postgres
-    container_name: postgREST
+    container_name: postgresql
     ports:
       - "5432:5432"
     environment:
