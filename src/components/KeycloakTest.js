@@ -13,7 +13,7 @@ const KeycloakTest = () => {
             {initialized ?
                 <div>
                     <h2>Jeton Keycloak :</h2>
-                    <div style={{ overflowY: 'scroll', height: 'calc(100vh - 250px)' }}>
+                    <div style={{ overflowY: 'scroll', height: 'calc(100vh - 230px)' }}>
                         <pre >{JSON.stringify(keycloak, undefined, 2)}</pre>
                     </div>
                 </div>

@@ -30,7 +30,7 @@ class About extends Component {
 
     return (
       <>
-        <div style={{ overflowY: 'scroll', height: 'calc(100vh - 250px)' }} dangerouslySetInnerHTML={{ __html: markdown }}></div>
+        <div style={{ overflowY: 'scroll', height: 'calc(100vh - 140px)' }} dangerouslySetInnerHTML={{ __html: markdown }}></div>
       </>
     )
   }
