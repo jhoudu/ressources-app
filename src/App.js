@@ -11,9 +11,9 @@ import './App.css'
 import HeaderApp from './components/HeaderApp'
 import { Layout } from 'antd';
 
-import {getKeycloakConfig, getPostgRestConfig} from './utils'
-
 import { withPostgRestFecth } from './hoc/withPostgRestFecth'
+
+import { useKeycloak } from '@react-keycloak/ssr'
 
 const { Content, Footer } = Layout;
 const GestionRessourcesWithFP = withPostgRestFecth(GestionRessources, 'ressources', 'id');
@@ -21,6 +21,9 @@ const GestionRessourcesWithFP = withPostgRestFecth(GestionRessources, 'ressource
 
 const App = () => {
   console.log('App');
+
+  // Ajouté pour forcer le refresh quand on est connecté
+  const { keycloak, initialized } = useKeycloak()
 
   return (
 
