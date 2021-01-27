@@ -29,7 +29,7 @@ export function getKeycloakConfig() {
 }
 
 export function getPostgRestConfig() {
-  const envPostgrest = process.env.COMPOSE_POSTGREST_URL
+  const envPostgrest = process.env.COMPOSE_POSTGREST_URL + '/'
   if (typeof window !== 'undefined' && window.env !== 'undefined')
     return 'http://localhost:3003/'; //client
   else //server
