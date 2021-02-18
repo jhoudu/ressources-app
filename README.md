@@ -7,7 +7,7 @@ Back-office with the following functions :
 * CUD authorized only if connected and have the role for
 
 ## TODOS
-Implement data fetching for SSR
+Implement data fetching for SSR  
 https://github.com/jaredpalmer/react-router-nextjs-like-data-fetching
 
 ## Usage
