@@ -6,6 +6,10 @@ Back-office with the following functions :
 * CRUD of Web resources list (title, description, link)
 * CUD authorized only if connected and have the role for
 
+## TODOS
+Implement data fetching for SSR
+https://github.com/jaredpalmer/react-router-nextjs-like-data-fetching
+
 ## Usage
 docker-compose --project-name ressources-app --env-file ./.env up  
 
